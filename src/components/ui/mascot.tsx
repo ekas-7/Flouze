@@ -1,15 +1,17 @@
-/** Doodle cat dreaming of a fish. Decorative only. */
-export function Mascot({ className = "" }: { className?: string }) {
+import type { SVGProps } from "react";
+
+/** Doodle cat dreaming of a fish. The Flouze logo; decorative in the UI. */
+export function Mascot(props: SVGProps<SVGSVGElement>) {
   return (
     <svg
       viewBox="0 0 120 96"
       aria-hidden
-      className={className}
       fill="none"
       stroke="#2d2b2a"
       strokeWidth="2.5"
       strokeLinecap="round"
       strokeLinejoin="round"
+      {...props}
     >
       <circle cx="70" cy="40" r="2.5" fill="#fffdf9" />
       <circle cx="77" cy="31" r="3.5" fill="#fffdf9" />

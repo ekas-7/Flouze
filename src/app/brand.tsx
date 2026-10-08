@@ -1,3 +1,7 @@
+import { readFile } from "node:fs/promises";
+import { join } from "node:path";
+import { Mascot } from "@/components/ui/mascot";
+
 // Mirrors the cream / ink tokens in globals.css (next/og can't read CSS variables).
 export const BRAND = {
   name: "Flouze",
@@ -14,7 +18,9 @@ export const IPHONES = [
   { name: "iphone-16-pro-max", width: 440, height: 956 },
 ];
 
-export function Logo({ size }: { size: number }) {
+/** App icon: the cat and its thought bubble, centered on cream. */
+export function Logo({ size, scale = 0.84 }: { size: number; scale?: number }) {
+  const width = size * scale;
   return (
     <div
       style={{
@@ -24,12 +30,36 @@ export function Logo({ size }: { size: number }) {
         alignItems: "center",
         justifyContent: "center",
         background: BRAND.background,
-        color: BRAND.ink,
-        fontSize: size * 0.62,
-        fontWeight: 800,
       }}
     >
-      F
+      <Mascot width={width} height={width * 0.8} />
     </div>
   );
+}
+
+/** Launch screen / large lockup: cat above the wordmark. */
+export function Lockup({ width }: { width: number }) {
+  return (
+    <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+      <Mascot width={width} height={width * 0.8} />
+      <div
+        style={{
+          marginTop: width * 0.06,
+          fontFamily: "Nunito",
+          fontWeight: 800,
+          fontSize: width * 0.36,
+          letterSpacing: -width * 0.006,
+          color: BRAND.ink,
+        }}
+      >
+        Flouze
+      </div>
+    </div>
+  );
+}
+
+/** Nunito ExtraBold subset to the letters of "Flouze" (2 KB), for next/og. */
+export async function wordmarkFont() {
+  const data = await readFile(join(process.cwd(), "src/app/fonts/nunito-800-flouze.ttf"));
+  return { name: "Nunito", data, weight: 800 as const, style: "normal" as const };
 }

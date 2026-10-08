@@ -1,5 +1,5 @@
 import { ImageResponse } from "next/og";
-import { BRAND, IPHONES, Logo } from "../../brand";
+import { BRAND, IPHONES, Lockup, wordmarkFont } from "../../brand";
 
 export function generateStaticParams() {
   return IPHONES.map(({ name }) => ({ device: name }));
@@ -24,9 +24,9 @@ export async function GET(_: Request, ctx: RouteContext<"/splash/[device]">) {
           background: BRAND.background,
         }}
       >
-        <Logo size={384} />
+        <Lockup width={width * 0.46} />
       </div>
     ),
-    { width, height },
+    { width, height, fonts: [await wordmarkFont()] },
   );
 }

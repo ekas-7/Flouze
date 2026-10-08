@@ -1,5 +1,7 @@
+import Link from "next/link";
 import type { ReactNode } from "react";
-import { CATEGORIES, TONES, formatAmount, type Category } from "./tokens";
+import { formatAmount } from "@/lib/money";
+import { CATEGORIES, TONES, type Category } from "./tokens";
 import { Mascot } from "./mascot";
 import { CategoryGlyph } from "./icons";
 
@@ -15,11 +17,11 @@ export function SummaryHeader({
   return (
     <header className="relative px-5 pt-4 pb-6">
       <h1 className="text-[34px] font-bold leading-none tracking-tight">{title}</h1>
-      <div className="mt-5 flex gap-10">
+      <div className="mt-6 flex gap-10">
         <Stat label="Expenses" value={expenses} className="text-expense" />
         <Stat label="Income" value={income} />
       </div>
-      <Mascot className="pointer-events-none absolute right-3 bottom-0 w-32" />
+      <Mascot className="pointer-events-none absolute top-0 right-4 w-24" />
     </header>
   );
 }
@@ -89,15 +91,17 @@ export function TransactionCard({
   time,
   amount,
   note,
+  href,
 }: {
   category: Category;
   time: string;
   amount: number;
-  note?: string;
+  note?: string | null;
+  href?: string;
 }) {
   const { label, tone } = CATEGORIES[category];
-  return (
-    <div className={`ml-12 flex items-center gap-3 rounded-card py-2.5 pr-4 pl-0 ${TONES[tone].bg}`}>
+  const body = (
+    <>
       <span className="-ml-5">
         <CategoryIcon category={category} />
       </span>
@@ -108,6 +112,14 @@ export function TransactionCard({
       <p className={`text-[15px] font-bold tabular-nums ${amount < 0 ? "" : "text-income"}`}>
         {formatAmount(amount, { signed: true })}
       </p>
-    </div>
+    </>
+  );
+  const className = `ml-12 flex items-center gap-3 rounded-card py-2.5 pr-4 pl-0 ${TONES[tone].bg}`;
+  return href ? (
+    <Link href={href} className={`${className} transition active:scale-[0.98]`}>
+      {body}
+    </Link>
+  ) : (
+    <div className={className}>{body}</div>
   );
 }

@@ -6,7 +6,6 @@ import { usePathname } from "next/navigation";
 const TABS = [
   { href: "/", label: "Dashboard", d: "M4 11l8-7 8 7v8a1 1 0 0 1-1 1h-4v-6h-6v6H5a1 1 0 0 1-1-1z" },
   { href: "/ledger", label: "Ledger", d: "M5 20V10M12 20V4M19 20v-7" },
-  { href: "/wallet", label: "Wallet", d: "M3 7h15a3 3 0 0 1 3 3v7a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3zM3 7l12-3v3M16 13.5h2" },
   { href: "/profile", label: "Profile", d: "M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 20c1.5-3.5 4.5-5 8-5s6.5 1.5 8 5" },
 ];
 

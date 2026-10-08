@@ -9,6 +9,21 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Transaction {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId     String
+  /// Integer paise. Negative = expense, positive = income.
+  amount     Int
+  category   String
+  note       String?
+  occurredAt DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([userId, occurredAt(sort: Desc)])
+  @@map("transaction")
+}
+
 model User {
   id            String    @id @map("_id")
   name          String

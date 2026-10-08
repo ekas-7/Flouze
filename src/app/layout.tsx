@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { TimeZoneCookie } from "@/components/time-zone-cookie";
 import { BRAND, IPHONES } from "./brand";
 import "./globals.css";
 
@@ -29,7 +30,10 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" className="h-full antialiased">
-      <body className="min-h-dvh flex flex-col">{children}</body>
+      <body className="min-h-dvh flex flex-col">
+        {children}
+        <TimeZoneCookie />
+      </body>
     </html>
   );
 }

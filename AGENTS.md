@@ -29,3 +29,6 @@ The target is an installed PWA on iPhone 16 (iOS Safari / WebKit). When using th
 - Sessions are stateful (Better Auth, stored in MongoDB). Read the user only via `getCurrentUser()` in `src/lib/session.ts`, inside a `<Suspense>` boundary.
 - Every Server Action / Route Handler touching user data calls `getCurrentUser()` itself and filters by `user.id`. Never accept a user id from the client.
 - MongoDB + Prisma: no migrations, run `pnpm db:push` after schema changes.
+- Money is integer paise (negative = expense). Use `parseAmount` / `formatAmount` from `src/lib/money.ts`, never floats.
+- Group and label dates with `src/lib/dates.ts` and the user's zone from `getTimeZone()`, never the server clock's zone.
+- Run `pnpm test` after touching `src/lib/money.ts` or `src/lib/dates.ts`.

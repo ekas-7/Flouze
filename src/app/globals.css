@@ -53,9 +53,12 @@ body {
     env(safe-area-inset-bottom) env(safe-area-inset-left);
 }
 
-/* iOS zooms the page when focusing inputs smaller than 16px. */
-input,
-select,
-textarea {
-  font-size: max(16px, 1em);
+/* iOS zooms the page when focusing inputs smaller than 16px.
+   In the base layer so text-* utilities can still make inputs bigger. */
+@layer base {
+  input,
+  select,
+  textarea {
+    font-size: max(16px, 1em);
+  }
 }

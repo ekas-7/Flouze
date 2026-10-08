@@ -20,10 +20,14 @@ Built:
 - iOS polish: content clears the Dynamic Island and home bar, no rubber-band bounce or tap flash, no input auto-zoom, system font (SF Pro)
 - Google sign-in with database sessions (see [Architecture](#architecture))
 - UI kit: tokens and components for the ledger, dock and quick-log button (see [UI kit](#ui-kit))
+- **The app:**
+  - **Dashboard** (`/`): this month's expenses vs income, and your latest 100 entries grouped by day and hour
+  - **Log** (`/new`, the pencil button): type the amount, pick a category, optional note and time, save
+  - **Edit / delete** (`/t/[id]`): tap any entry
+  - **Ledger** (`/ledger`): this month's spending by category, with shares
+  - **Profile** (`/profile`): account and sign out
 
-Next: the expense model and the logging screen.
-
-Later, maybe: offline logging, budgets, push reminders.
+Later, maybe: older months and search, budgets, offline logging, push reminders, CSV export.
 
 ## Principles
 
@@ -77,17 +81,21 @@ Next.js 16 server ── Server Components / Server Actions
 Better Auth ── Google OAuth
    │
    ▼
-Prisma 6 ── MongoDB Atlas (user, session, account, verification, ...expenses)
+Prisma 6 ── MongoDB Atlas (user, session, account, verification, transaction)
 ```
 
 **Stateful sessions.** Signing in creates a `session` document in MongoDB, and the browser only holds an opaque, signed, httpOnly cookie pointing to it. Every request looks the session up in the database, so signing out (or deleting the session document) revokes access immediately. Sessions last 30 days and slide forward once a day while you use the app.
 
 **Server-first.** Sign-in and sign-out are Server Actions, and pages read the user on the server. The browser never loads an auth SDK, and nothing sensitive is sent to the client.
 
+**Money and time.** Amounts are stored as integer paise (`amount` is negative for expenses, positive for income), so totals never drift from floating-point rounding. Income is just the `income` category. Days and hours are grouped in the device's time zone: the app stores it in a `tz` cookie, and the server formats with it (defaults to `Asia/Kolkata`).
+
 **Rules for new code:**
 
 - Read the user with `getCurrentUser()` from `src/lib/session.ts`. It redirects to `/sign-in` when there's no valid session. With Cache Components on, call it inside a `<Suspense>` boundary.
 - Every Server Action and Route Handler that touches user data calls `getCurrentUser()` itself and scopes queries by `user.id`. Never trust an id from the client.
+- Read transactions through `src/lib/transactions.ts`; its functions resolve the user themselves.
+- Money is parsed with `parseAmount()` and shown with `formatAmount()` from `src/lib/money.ts`; never use floats for stored amounts.
 - Database access stays on the server (`src/lib/db.ts`, `src/lib/auth.ts` and `src/lib/session.ts` are server-only).
 
 ## Stack
@@ -105,7 +113,10 @@ cp .env.example .env   # fill in the values (see below)
 pnpm install           # also generates the Prisma client
 pnpm db:push           # creates collections and indexes
 pnpm dev               # http://localhost:3000
+pnpm test              # unit tests for money and date logic
 ```
+
+**Trying the app without Google:** `pnpm dlx tsx --env-file=.env scripts/test-session.mts` creates a test user and prints a session cookie; set it in your browser for `localhost:3000`. Add `--cleanup` to delete the test user and their entries.
 
 ### Environment
 
@@ -138,9 +149,13 @@ Open the URL in Safari on the iPhone, then **Share → Add to Home Screen**.
 
 | Path | What it is |
 | --- | --- |
-| `src/app/page.tsx` | Home (signed-in only) |
+| `src/app/(tabs)/` | Dashboard, Ledger and Profile, sharing the dock and pencil button |
+| `src/app/new/`, `src/app/t/[id]/` | Log and edit screens |
+| `src/components/transaction-form.tsx` | The log / edit form |
 | `src/app/sign-in/page.tsx` | Sign-in screen |
-| `src/app/actions.ts` | Sign-in / sign-out Server Actions |
+| `src/app/actions.ts` | Server Actions: sign in / out, save and delete transactions |
+| `src/lib/transactions.ts` | Transaction reads, scoped to the signed-in user |
+| `src/lib/money.ts`, `src/lib/dates.ts` | Paise parsing / formatting, time-zone-aware grouping (tested in `lib.test.ts`) |
 | `src/app/api/auth/[...all]/route.ts` | Better Auth endpoints (OAuth callback, session) |
 | `src/lib/auth.ts` | Better Auth config |
 | `src/lib/session.ts` | `getCurrentUser()`, the only way to read the user |

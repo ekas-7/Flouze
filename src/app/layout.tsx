@@ -4,7 +4,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: BRAND.name,
-  description: "Make money moves.",
+  description: "Log every expense in seconds.",
   applicationName: BRAND.name,
   appleWebApp: {
     capable: true,

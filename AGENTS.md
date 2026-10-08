@@ -17,3 +17,9 @@ The target is an installed PWA on iPhone 16 (iOS Safari / WebKit). When using th
 - Don't use `next-pwa`. For service-worker caching use Serwist, per `node_modules/next/dist/docs/01-app/02-guides/progressive-web-apps.md`.
 - Push needs iOS 16.4+ and only works once the app is installed to the home screen.
 - iOS can evict caches of apps not opened for a while; never treat Cache Storage as the source of truth for money data.
+
+## Auth and data access
+
+- Sessions are stateful (Better Auth, stored in MongoDB). Read the user only via `getCurrentUser()` in `src/lib/session.ts`, inside a `<Suspense>` boundary.
+- Every Server Action / Route Handler touching user data calls `getCurrentUser()` itself and filters by `user.id`. Never accept a user id from the client.
+- MongoDB + Prisma: no migrations, run `pnpm db:push` after schema changes.

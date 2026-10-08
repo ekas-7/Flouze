@@ -1,7 +1,8 @@
 
 generator client {
-  provider = "prisma-client"
-  output        = "../src/generated/prisma"
+  // prisma-client-js, not prisma-client: Turbopack rewrites the bundled client's
+  // path, so it can't find its engine on Vercel. @prisma/client stays external.
+  provider      = "prisma-client-js"
   // rhel-openssl-3.0.x is Vercel's serverless runtime.
   binaryTargets = ["native", "rhel-openssl-3.0.x"]
 }

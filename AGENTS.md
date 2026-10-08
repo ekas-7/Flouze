@@ -20,7 +20,7 @@ The target is an installed PWA on iPhone 16 (iOS Safari / WebKit). When using th
 
 ## UI kit
 
-- Build screens from `@/components/ui` and the theme tokens in `src/app/globals.css` (`cream`, `ink`, pastel tones, `rounded-card`, `shadow-soft`...). No raw hex colors, no new fonts, no icon or image libraries: categories use emoji from `CATEGORIES`.
+- Build screens from `@/components/ui` and the theme tokens in `src/app/globals.css` (`cream`, `ink`, pastel tones, `rounded-card`, `shadow-soft`...). No raw hex colors, no new fonts, no icon or image libraries: category icons are the custom doodle SVGs in `src/components/ui/icons.tsx` (ink outline, pastel fill, 32px grid); draw new ones in the same style.
 - Money always goes through `formatAmount()`, uses `tabular-nums`, and is colored with `text-expense` / `text-income`.
 - See `/kit` (`src/app/kit/page.tsx`) for every component; add new kit components there too.
 

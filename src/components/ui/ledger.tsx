@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { CATEGORIES, TONES, formatAmount, type Category } from "./tokens";
 import { Mascot } from "./mascot";
+import { CategoryGlyph } from "./icons";
 
 export function SummaryHeader({
   title,
@@ -72,14 +73,13 @@ export function TimeMarker({ time }: { time: string }) {
 }
 
 export function CategoryIcon({ category, size = 44 }: { category: Category; size?: number }) {
-  const { emoji, tone } = CATEGORIES[category];
   return (
     <span
       aria-hidden
-      style={{ width: size, height: size, fontSize: size * 0.55 }}
-      className={`grid shrink-0 place-items-center rounded-tile shadow-clay ${TONES[tone].bg}`}
+      style={{ width: size, height: size }}
+      className={`grid shrink-0 place-items-center rounded-tile shadow-clay ${TONES[CATEGORIES[category].tone].bg}`}
     >
-      {emoji}
+      <CategoryGlyph category={category} className="size-[72%]" />
     </span>
   );
 }

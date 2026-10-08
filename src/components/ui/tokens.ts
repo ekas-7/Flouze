@@ -11,19 +11,19 @@ export const TONES: Record<Tone, { bg: string; ink: string }> = {
 };
 
 export const CATEGORIES = {
-  food: { label: "Food", emoji: "🍔", tone: "butter" },
-  groceries: { label: "Groceries", emoji: "🥦", tone: "mint" },
-  dessert: { label: "Dessert", emoji: "🍰", tone: "peach" },
-  coffee: { label: "Coffee", emoji: "☕", tone: "butter" },
-  transport: { label: "Transport", emoji: "🚗", tone: "sky" },
-  games: { label: "Games", emoji: "🎮", tone: "lilac" },
-  beauty: { label: "Beauty", emoji: "💄", tone: "rose" },
-  sport: { label: "Sport", emoji: "⚽", tone: "sky" },
-  shopping: { label: "Shopping", emoji: "🛍️", tone: "rose" },
-  bills: { label: "Bills", emoji: "🧾", tone: "lilac" },
-  health: { label: "Health", emoji: "💊", tone: "mint" },
-  other: { label: "Other", emoji: "✨", tone: "peach" },
-} satisfies Record<string, { label: string; emoji: string; tone: Tone }>;
+  food: { label: "Food", tone: "butter" },
+  groceries: { label: "Groceries", tone: "mint" },
+  dessert: { label: "Dessert", tone: "peach" },
+  coffee: { label: "Coffee", tone: "butter" },
+  transport: { label: "Transport", tone: "sky" },
+  games: { label: "Games", tone: "lilac" },
+  beauty: { label: "Beauty", tone: "rose" },
+  sport: { label: "Sport", tone: "sky" },
+  shopping: { label: "Shopping", tone: "rose" },
+  bills: { label: "Bills", tone: "lilac" },
+  health: { label: "Health", tone: "mint" },
+  other: { label: "Other", tone: "peach" },
+} satisfies Record<string, { label: string; tone: Tone }>;
 
 export type Category = keyof typeof CATEGORIES;
 

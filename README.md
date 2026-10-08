@@ -57,13 +57,13 @@ Kawaii / soft neumorphic-editorial: warm cream paper, pastel category colors, so
 | `DayHeader` | Date pill + weekday chip + day's income / expense totals |
 | `TimeMarker` | `14:00 ▸` hour group label |
 | `TransactionCard` | Pastel card: clay category icon, title, time, signed amount |
-| `CategoryIcon` | Claymorphic emoji tile in the category's pastel |
+| `CategoryIcon` | Claymorphic tile with the category's doodle icon, in its pastel |
 | `Button` | Pill button, `primary` (ink) or `soft` (card) |
 | `Fab` | Pencil quick-log button, bottom right above the dock |
 | `Dock` | Floating pill nav: Dashboard, Ledger, Wallet, Profile |
 | `Mascot` | Doodle cat SVG (decorative) |
 
-Categories (label, emoji, tone) live in `CATEGORIES` in `src/components/ui/tokens.ts`; `formatAmount()` formats money (negative = expense, true minus sign, Indian digit grouping). Category icons are Apple emoji, which render 3D on iPhone, so the kit ships no image assets.
+Categories (label, tone) live in `CATEGORIES` in `src/components/ui/tokens.ts`; `formatAmount()` formats money (negative = expense, true minus sign, Indian digit grouping). Category icons are custom inline SVG doodles in `src/components/ui/icons.tsx`, drawn to match the mascot, so the kit ships no image files.
 
 ## Architecture
 

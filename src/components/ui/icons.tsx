@@ -110,6 +110,16 @@ export const CATEGORY_ICONS: Record<Category, ReactNode> = {
       <path d="M9.5 14.5h3" stroke={GREEN} strokeWidth="1.5" />
     </g>
   ),
+  investments: (
+    <>
+      <rect x="8" y="23" width="16" height="4" rx="2" fill={MUSTARD} />
+      <rect x="9.5" y="19" width="13" height="4" rx="2" fill={MUSTARD} />
+      <rect x="8" y="15" width="16" height="4" rx="2" fill={MUSTARD} />
+      <path d="M16 15V8" />
+      <path d="M16 11.5C15 8.5 12 7.5 8.5 8C9 11 12 12.5 16 11.5Z" fill={GREEN} />
+      <path d="M16 9C17 6 20 4.5 23.5 5C23 8 20 10 16 9Z" fill={GREEN} />
+    </>
+  ),
   income: (
     <>
       <rect x="4" y="9" width="24" height="14" rx="2.5" fill={GREEN} />

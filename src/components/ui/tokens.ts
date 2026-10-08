@@ -23,6 +23,7 @@ export const CATEGORIES = {
   shopping: { label: "Shopping", tone: "rose" },
   bills: { label: "Bills", tone: "lilac" },
   health: { label: "Health", tone: "mint" },
+  investments: { label: "Investments", tone: "peach" },
   other: { label: "Other", tone: "peach" },
   income: { label: "Income", tone: "mint" },
 } satisfies Record<string, { label: string; tone: Tone }>;

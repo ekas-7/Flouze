@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useActionState, useState } from "react";
 import { deleteTransaction, saveTransaction } from "@/app/actions";
-import { Button, CATEGORIES, CategoryIcon, type Category } from "@/components/ui";
+import { Button, CATEGORIES, CategoryIcon, LoadingLabel, Skeleton, type Category } from "@/components/ui";
 
 type Initial = { id?: string; amount: string; category: Category; note: string; when: string };
 
@@ -113,5 +113,31 @@ export function TransactionForm({ initial }: { initial: Initial }) {
         )}
       </div>
     </form>
+  );
+}
+
+export function TransactionFormSkeleton() {
+  return (
+    <div className="flex flex-1 flex-col px-5 pt-3 pb-6">
+      <LoadingLabel />
+      <header className="flex items-center justify-between py-2">
+        <Skeleton className="h-4 w-14 rounded-full" />
+        <Skeleton className="h-4 w-24 rounded-full" />
+        <span className="w-14" />
+      </header>
+      <Skeleton className="mx-auto mt-8 h-14 w-40 rounded-tile" />
+      <div className="mt-8 grid grid-cols-4 gap-x-2 gap-y-4">
+        {Object.keys(CATEGORIES).map((c) => (
+          <div key={c} className="flex flex-col items-center gap-1.5">
+            <Skeleton className="m-0.5 size-[52px] rounded-tile" />
+            <Skeleton className="h-2.5 w-10 rounded-full" />
+          </div>
+        ))}
+      </div>
+      <div className="mt-8 space-y-3">
+        <Skeleton className="h-[52px] rounded-card" />
+        <Skeleton className="h-[52px] rounded-card" />
+      </div>
+    </div>
   );
 }

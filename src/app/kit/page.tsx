@@ -6,10 +6,12 @@ import {
   Dock,
   Fab,
   Sheet,
+  Skeleton,
   SummaryHeader,
   TimeMarker,
   TONES,
   TransactionCard,
+  TransactionCardSkeleton,
   type Category,
   type Tone,
 } from "@/components/ui";
@@ -68,6 +70,15 @@ export default function Kit() {
         <div className="space-y-3">
           <Button>Primary</Button>
           <Button variant="soft">Soft</Button>
+        </div>
+
+        <h2 className="mt-10 mb-3 text-lg font-bold">Loading</h2>
+        <div className="-mx-4">
+          <SummaryHeader />
+        </div>
+        <div className="space-y-2.5">
+          <Skeleton className="h-6 w-28 rounded-full" />
+          <TransactionCardSkeleton />
         </div>
       </Sheet>
       <Fab href="/kit" />

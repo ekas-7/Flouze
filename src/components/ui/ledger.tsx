@@ -4,19 +4,25 @@ import { formatAmount } from "@/lib/money";
 import { CATEGORIES, TONES, type Category } from "./tokens";
 import { Mascot } from "./mascot";
 import { CategoryGlyph } from "./icons";
+import { Skeleton } from "./skeleton";
 
+/** Leave out title and totals to get its loading skeleton. */
 export function SummaryHeader({
   title,
   expenses,
   income,
 }: {
-  title: string;
-  expenses: number;
-  income: number;
+  title?: string;
+  expenses?: number;
+  income?: number;
 }) {
   return (
     <header className="relative px-5 pt-4 pb-6">
-      <h1 className="text-[34px] font-bold leading-none tracking-tight">{title}</h1>
+      {title === undefined ? (
+        <Skeleton className="h-[34px] w-40 rounded-tile" />
+      ) : (
+        <h1 className="text-[34px] font-bold leading-none tracking-tight">{title}</h1>
+      )}
       <div className="mt-6 flex gap-10">
         <Stat label="Expenses" value={expenses} className="text-expense" />
         <Stat label="Income" value={income} />
@@ -26,13 +32,17 @@ export function SummaryHeader({
   );
 }
 
-function Stat({ label, value, className = "" }: { label: string; value: number; className?: string }) {
+function Stat({ label, value, className = "" }: { label: string; value?: number; className?: string }) {
   return (
     <div>
       <p className="text-[13px] font-medium text-ink/60">{label}</p>
-      <p className={`mt-0.5 text-[28px] font-bold tabular-nums leading-tight ${className}`}>
-        {formatAmount(value)}
-      </p>
+      {value === undefined ? (
+        <Skeleton className="mt-1.5 h-7 w-24 rounded-full" />
+      ) : (
+        <p className={`mt-0.5 text-[28px] font-bold tabular-nums leading-tight ${className}`}>
+          {formatAmount(value)}
+        </p>
+      )}
     </div>
   );
 }
@@ -121,5 +131,18 @@ export function TransactionCard({
     </Link>
   ) : (
     <div className={className}>{body}</div>
+  );
+}
+
+export function TransactionCardSkeleton() {
+  return (
+    <div className="ml-12 flex items-center gap-3 rounded-card bg-oat/50 py-2.5 pr-4">
+      <Skeleton className="-ml-5 size-11 shrink-0 rounded-tile" />
+      <div className="flex-1 space-y-2">
+        <Skeleton className="h-3.5 w-28 rounded-full" />
+        <Skeleton className="h-2.5 w-12 rounded-full" />
+      </div>
+      <Skeleton className="h-3.5 w-14 rounded-full" />
+    </div>
   );
 }

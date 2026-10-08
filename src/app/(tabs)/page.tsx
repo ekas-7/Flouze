@@ -1,11 +1,14 @@
 import { Suspense } from "react";
 import {
   DayHeader,
+  LoadingLabel,
   Mascot,
   Sheet,
+  Skeleton,
   SummaryHeader,
   TimeMarker,
   TransactionCard,
+  TransactionCardSkeleton,
   isCategory,
 } from "@/components/ui";
 import { dayKey, dayLabel, hourOf, monthName, timeOf, weekdayOf } from "@/lib/dates";
@@ -15,10 +18,27 @@ import { getMonthTransactions, getRecentTransactions } from "@/lib/transactions"
 export default function Dashboard() {
   return (
     <main className="flex flex-1 flex-col">
-      <Suspense fallback={<SummaryHeader title=" " expenses={0} income={0} />}>
+      <Suspense fallback={<Loading />}>
         <Content />
       </Suspense>
     </main>
+  );
+}
+
+function Loading() {
+  return (
+    <>
+      <LoadingLabel />
+      <SummaryHeader />
+      <Sheet>
+        <Skeleton className="mb-4 h-6 w-28 rounded-full" />
+        <div className="space-y-2.5">
+          <TransactionCardSkeleton />
+          <TransactionCardSkeleton />
+          <TransactionCardSkeleton />
+        </div>
+      </Sheet>
+    </>
   );
 }
 

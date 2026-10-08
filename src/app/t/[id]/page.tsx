@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
-import { TransactionForm } from "@/components/transaction-form";
+import { TransactionForm, TransactionFormSkeleton } from "@/components/transaction-form";
 import { isCategory } from "@/components/ui";
 import { toInputDateTime } from "@/lib/dates";
 import { toInputAmount } from "@/lib/money";
@@ -11,7 +11,7 @@ export const metadata = { title: "Edit entry · Flouze" };
 
 export default function EditTransaction({ params }: PageProps<"/t/[id]">) {
   return (
-    <Suspense>
+    <Suspense fallback={<TransactionFormSkeleton />}>
       <Form params={params} />
     </Suspense>
   );

@@ -1,7 +1,8 @@
+// Mirrors the cream / ink tokens in globals.css (next/og can't read CSS variables).
 export const BRAND = {
   name: "Flouze",
-  background: "#0a0a0a",
-  accent: "#3ddc84",
+  background: "#fbf7ee",
+  ink: "#2d2b2a",
 };
 
 // iPhone 16 lineup in CSS points; all are @3x.
@@ -23,7 +24,7 @@ export function Logo({ size }: { size: number }) {
         alignItems: "center",
         justifyContent: "center",
         background: BRAND.background,
-        color: BRAND.accent,
+        color: BRAND.ink,
         fontSize: size * 0.62,
         fontWeight: 800,
       }}

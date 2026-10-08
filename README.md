@@ -19,6 +19,7 @@ Built:
 - Installable PWA: manifest, home screen icon, launch screens for iPhone 16e, 16, 16 Plus, 16 Pro and 16 Pro Max
 - iOS polish: content clears the Dynamic Island and home bar, no rubber-band bounce or tap flash, no input auto-zoom, system font (SF Pro)
 - Google sign-in with database sessions (see [Architecture](#architecture))
+- UI kit: tokens and components for the ledger, dock and quick-log button (see [UI kit](#ui-kit))
 
 Next: the expense model and the logging screen.
 
@@ -30,6 +31,39 @@ Later, maybe: offline logging, budgets, push reminders.
 - **Ship small.** The simplest thing that works, then iterate. No speculative features.
 - **Fast by default.** Static where possible, no heavy dependencies, no web fonts, no auth JavaScript in the browser.
 - **Trust is the product.** It's people's money: security, correctness and clear numbers are never cut.
+
+## UI kit
+
+Kawaii / soft neumorphic-editorial: warm cream paper, pastel category colors, soft charcoal type, a doodle cat mascot dreaming of fish. Live reference with sample data at [`/kit`](http://localhost:3000/kit).
+
+**Tokens** (Tailwind theme in `src/app/globals.css`, use as classes like `bg-cream`, `text-ink`, `rounded-card`):
+
+| Token | Value | Use |
+| --- | --- | --- |
+| `cream` / `oat` / `card` | `#FBF7EE` / `#F3EADB` / `#FFFDF9` | Page / chips / sheets and cards |
+| `ink` | `#2D2B2A` | Text, primary buttons (use `/60`, `/40` for secondary text) |
+| `mint` `peach` `sky` `lilac` `butter` `rose` | pastel + matching `-ink` | Category cards, tiles and their text |
+| `expense` / `income` | `#C4473F` / `#2F8653` | Money (both pass WCAG AA) |
+| `rounded-card` / `-tile` / `-sheet` | 18 / 14 / 28px | Cards / icon tiles / sheets |
+| `shadow-soft` / `-clay` / `-float` | | Low-elevation cards / claymorphic icon tiles / floating dock and FAB |
+| `font-sans` | SF Pro Rounded (`ui-rounded`) | Built into iOS, zero download |
+
+**Components** (`import { … } from "@/components/ui"`):
+
+| Component | What it is |
+| --- | --- |
+| `SummaryHeader` | Title + Expenses vs Income totals, with the mascot |
+| `Sheet` | Rounded card-colored sheet the ledger sits on (includes bottom space for the dock) |
+| `DayHeader` | Date pill + weekday chip + day's income / expense totals |
+| `TimeMarker` | `14:00 ▸` hour group label |
+| `TransactionCard` | Pastel card: clay category icon, title, time, signed amount |
+| `CategoryIcon` | Claymorphic emoji tile in the category's pastel |
+| `Button` | Pill button, `primary` (ink) or `soft` (card) |
+| `Fab` | Pencil quick-log button, bottom right above the dock |
+| `Dock` | Floating pill nav: Dashboard, Ledger, Wallet, Profile |
+| `Mascot` | Doodle cat SVG (decorative) |
+
+Categories (label, emoji, tone) live in `CATEGORIES` in `src/components/ui/tokens.ts`; `formatAmount()` formats money (negative = expense, true minus sign, Indian digit grouping). Category icons are Apple emoji, which render 3D on iPhone, so the kit ships no image assets.
 
 ## Architecture
 
@@ -112,6 +146,8 @@ Open the URL in Safari on the iPhone, then **Share → Add to Home Screen**.
 | `src/lib/session.ts` | `getCurrentUser()`, the only way to read the user |
 | `src/lib/db.ts` | Shared Prisma client |
 | `prisma/schema.prisma` | Database schema (MongoDB) |
+| `src/components/ui/` | UI kit components and tokens |
+| `src/app/kit/page.tsx` | UI kit reference page |
 | `src/app/brand.tsx` | App name, colors, logo, and the iPhone 16 screen sizes |
 | `src/app/manifest.ts` | Web app manifest |
 | `src/app/icon.tsx`, `apple-icon.tsx` | Generated app icons |

@@ -2,28 +2,51 @@
 
 @custom-variant standalone (@media (display-mode: standalone));
 
-:root {
-  --background: #0a0a0a;
-  --foreground: #ededed;
-  --accent: #3ddc84;
-}
+/* Flouze UI kit tokens. Kawaii / soft neumorphic-editorial. */
+@theme {
+  --color-cream: #fbf7ee;
+  --color-oat: #f3eadb;
+  --color-card: #fffdf9;
+  --color-ink: #2d2b2a;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-accent: var(--accent);
-  --font-sans: -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  /* Category pastels: background + readable ink of the same hue. */
+  --color-mint: #ddf2e1;
+  --color-mint-ink: #3e7b50;
+  --color-peach: #fce0d0;
+  --color-peach-ink: #b5583b;
+  --color-sky: #daeef8;
+  --color-sky-ink: #3a6d8e;
+  --color-lilac: #e9e0f6;
+  --color-lilac-ink: #6a579b;
+  --color-butter: #fbedc8;
+  --color-butter-ink: #8c6a1c;
+  --color-rose: #fadde6;
+  --color-rose-ink: #a3466b;
+
+  /* Money. Both pass WCAG AA on cream and card. */
+  --color-expense: #c4473f;
+  --color-income: #2f8653;
+
+  --radius-card: 18px;
+  --radius-tile: 14px;
+  --radius-sheet: 28px;
+
+  --shadow-soft: 0 1px 0 rgb(255 255 255 / 0.9) inset, 0 6px 16px -10px rgb(45 43 42 / 0.25);
+  --shadow-clay: inset 0 2px 2px rgb(255 255 255 / 0.7), inset 0 -3px 4px rgb(45 43 42 / 0.12), 0 3px 6px -3px rgb(45 43 42 / 0.25);
+  --shadow-float: 0 12px 28px -12px rgb(45 43 42 / 0.45);
+
+  --font-sans: ui-rounded, "SF Pro Rounded", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
 }
 
 html {
-  background: var(--background);
+  background: var(--color-cream);
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: transparent;
   overscroll-behavior: none;
 }
 
 body {
-  color: var(--foreground);
+  color: var(--color-ink);
   font-family: var(--font-sans);
   overscroll-behavior: none;
   padding: env(safe-area-inset-top) env(safe-area-inset-right)

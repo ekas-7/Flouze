@@ -18,6 +18,12 @@ The target is an installed PWA on iPhone 16 (iOS Safari / WebKit). When using th
 - Push needs iOS 16.4+ and only works once the app is installed to the home screen.
 - iOS can evict caches of apps not opened for a while; never treat Cache Storage as the source of truth for money data.
 
+## UI kit
+
+- Build screens from `@/components/ui` and the theme tokens in `src/app/globals.css` (`cream`, `ink`, pastel tones, `rounded-card`, `shadow-soft`...). No raw hex colors, no new fonts, no icon or image libraries: categories use emoji from `CATEGORIES`.
+- Money always goes through `formatAmount()`, uses `tabular-nums`, and is colored with `text-expense` / `text-income`.
+- See `/kit` (`src/app/kit/page.tsx`) for every component; add new kit components there too.
+
 ## Auth and data access
 
 - Sessions are stateful (Better Auth, stored in MongoDB). Read the user only via `getCurrentUser()` in `src/lib/session.ts`, inside a `<Suspense>` boundary.

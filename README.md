@@ -14,7 +14,9 @@ Day zero. What exists today is the app shell:
 - Launch screens sized for iPhone 16e, 16, 16 Plus, 16 Pro and 16 Pro Max
 - iOS polish: content clears the Dynamic Island and home bar, no rubber-band bounce or tap flash, no input auto-zoom, system font (SF Pro)
 
-Not built yet: the product itself, accounts, data, offline caching, push notifications.
+Also wired up: Prisma connected to MongoDB Atlas (no models yet).
+
+Not built yet: the product itself, accounts, offline caching, push notifications.
 
 ## Principles
 
@@ -27,14 +29,21 @@ Not built yet: the product itself, accounts, data, offline caching, push notific
 
 - [Next.js 16](https://nextjs.org) (App Router, Turbopack, Cache Components)
 - React 19, TypeScript, Tailwind CSS 4
+- [Prisma 6](https://www.prisma.io) + MongoDB Atlas (Prisma 7 doesn't support MongoDB yet)
 - pnpm
 
 ## Getting started
 
 ```bash
-pnpm install
-pnpm dev        # http://localhost:3000
+cp .env.example .env   # then fill in the MongoDB password
+pnpm install           # also generates the Prisma client
+pnpm dev               # http://localhost:3000
 ```
+
+### Database
+
+- Schema: `prisma/schema.prisma`. Import the client with `import { db } from "@/lib/db"` (server code only).
+- MongoDB has no migrations: after editing the schema, run `pnpm db:push`.
 
 ### Test on your iPhone
 
@@ -56,6 +65,8 @@ Open `http://<your-mac-ip>:3000` in Safari on the iPhone (same Wi-Fi), then tap 
 | `src/app/splash/[device]/route.tsx` | Generated iOS launch screens |
 | `src/app/layout.tsx` | iOS meta tags and viewport |
 | `src/app/globals.css` | Theme and iOS CSS fixes |
+| `prisma/schema.prisma` | Database schema (MongoDB) |
+| `src/lib/db.ts` | Shared Prisma client |
 
 ## AI agent setup
 

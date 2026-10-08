@@ -9,12 +9,18 @@ import { parseAmount } from "@/lib/money";
 import { getCurrentUser } from "@/lib/session";
 import { isObjectId } from "@/lib/transactions";
 
-export async function signInWithGoogle() {
-  const { url } = await auth.api.signInSocial({
-    body: { provider: "google", callbackURL: "/" },
-    headers: await headers(),
-  });
-  if (url) redirect(url);
+export async function signInWithGoogle(): Promise<FormState> {
+  let url: string | undefined;
+  try {
+    ({ url } = await auth.api.signInSocial({
+      body: { provider: "google", callbackURL: "/" },
+      headers: await headers(),
+    }));
+  } catch (error) {
+    console.error("Google sign-in failed:", error);
+  }
+  if (!url) return { error: "Google sign-in isn't available right now. Please try again later." };
+  redirect(url);
 }
 
 export async function signOut() {
